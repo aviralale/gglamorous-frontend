@@ -1,52 +1,36 @@
 import { CartIcon } from "@/assets/Icons";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Cart from "./Cart";
+import Wishlist from "./WishList";
 
 export default function CartandWishlist() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="link" className="p-0">
+        <Button variant="link" className="p-0 relative">
           <CartIcon />
+          <span className="absolute top-0 -right-1 text-xs font-semibold">
+            0
+          </span>
         </Button>
       </SheetTrigger>
       <SheetContent>
-        <SheetHeader>
-          <SheetTitle>Edit profile</SheetTitle>
-          <SheetDescription>
-            Make changes to your profile here. Click save when you're done.
-          </SheetDescription>
-        </SheetHeader>
         <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input id="name" value="Pedro Duarte" className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
-            </Label>
-            <Input id="username" value="@peduarte" className="col-span-3" />
-          </div>
+          <Tabs defaultValue="cart" className="py-6">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="cart">Your Cart</TabsTrigger>
+              <TabsTrigger value="wishlist">WishList</TabsTrigger>
+            </TabsList>
+            <TabsContent value="cart">
+              <Cart />
+            </TabsContent>
+            <TabsContent value="wishlist">
+              <Wishlist />
+            </TabsContent>
+          </Tabs>
         </div>
-        <SheetFooter>
-          <SheetClose asChild>
-            <Button type="submit">Save changes</Button>
-          </SheetClose>
-        </SheetFooter>
       </SheetContent>
     </Sheet>
   );
