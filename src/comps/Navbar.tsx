@@ -12,6 +12,7 @@ import Authentication from "./Authentication";
 import CartandWishlist from "./CartandWishlist";
 import { HeartIcon } from "@/assets/Icons";
 import { Link } from "react-router-dom";
+import Search from "./Search";
 
 export default function Navbar() {
   const flagData = [
@@ -68,6 +69,7 @@ export default function Navbar() {
         <img width={180} src={Logo} alt="Logo" />
       </Link>
       <div className="flex gap-3 items-center">
+        <Search />
         <Authentication />
         <Link to="">
           <HeartIcon />
