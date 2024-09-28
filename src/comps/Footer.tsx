@@ -5,6 +5,7 @@ import {
   PinterestIcon,
   TiktokIcon,
 } from "@/assets/Icons";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -54,9 +55,15 @@ export default function Footer() {
         <div className="flex flex-col gap-4">
           <h1>My Account</h1>
           <ul className="flex flex-col gap-2">
-            <li className="text-xs text-muted-foreground">Wishlist</li>
-            <li className="text-xs text-muted-foreground">Order History</li>
-            <li className="text-xs text-muted-foreground">My Details</li>
+            <li className="text-xs text-muted-foreground">
+              <Link to="/profile/my-wishlist"> Wishlist</Link>
+            </li>
+            <li className="text-xs text-muted-foreground">
+              <Link to="/profile/my-orders"> Order History</Link>
+            </li>
+            <li className="text-xs text-muted-foreground">
+              <Link to="/profile/my-details"> My Details</Link>
+            </li>
           </ul>
         </div>
         <div className="flex flex-col gap-4">
@@ -76,7 +83,7 @@ export default function Footer() {
             Be the first to hear about sales, new arrivals, and exclusive
             offers.
           </p>
-          <form action="" className="flex flex-col gap-4">
+          <form className="flex flex-col gap-4">
             <div className="flex flex-col">
               <label htmlFor="email" className="text-xs">
                 Email Address

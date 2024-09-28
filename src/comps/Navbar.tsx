@@ -71,7 +71,7 @@ export default function Navbar() {
       <div className="flex gap-3 items-center">
         <Search />
         <Authentication />
-        <Link to="">
+        <Link to="/profile/my-wishlist">
           <HeartIcon />
         </Link>
         <CartandWishlist />
