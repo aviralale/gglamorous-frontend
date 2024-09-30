@@ -1,7 +1,8 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { CheckIcon, EyeIcon, EyeOffIcon } from "@/assets/Icons";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { registerUser } from "@/auth/auth";
 
 interface PasswordChecks {
   length: boolean;
@@ -20,6 +21,7 @@ export default function Register(): JSX.Element {
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [passwordsMatch, setPasswordsMatch] = useState<boolean | null>(null);
+  const [message, setMessage] = useState<string>("");
 
   const [passwordChecks, setPasswordChecks] = useState<PasswordChecks>({
     length: false,
@@ -28,6 +30,8 @@ export default function Register(): JSX.Element {
     number: false,
     special: false,
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setPasswordChecks({
@@ -52,10 +56,34 @@ export default function Register(): JSX.Element {
     setPhoneNumber(value);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Add your form submission logic here
-    console.log("Form submitted");
+    if (
+      !passwordChecks.length &&
+      !passwordChecks.lowercase &&
+      !passwordChecks.number &&
+      !passwordChecks.special &&
+      !passwordChecks.uppercase &&
+      password !== confirmPassword
+    ) {
+      setMessage("Password doesn't meet the required criterias.");
+      return;
+    }
+    const data = {
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      phone_number: phoneNumber,
+      password: password,
+      re_password: confirmPassword,
+    };
+    try {
+      const response = await registerUser(data);
+      console.log(response);
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const togglePasswordVisibility = (): void => {
@@ -138,7 +166,7 @@ export default function Register(): JSX.Element {
               ).map(([check, isValid]) => (
                 <li key={check} className="flex items-center gap-2">
                   {isValid ? (
-                    <CheckIcon size="size-4" />
+                    <CheckIcon className="size-4" />
                   ) : (
                     <span className="w-4 h-4 inline-block" />
                   )}

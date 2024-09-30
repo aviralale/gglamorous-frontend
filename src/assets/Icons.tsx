@@ -1,8 +1,8 @@
 interface IconProps {
-  size?: string;
+  className?: string;
 }
 
-export const UserIcon = ({ size = "size-6" }: IconProps) => {
+export const UserIcon = ({ className = "size-6" }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -10,7 +10,7 @@ export const UserIcon = ({ size = "size-6" }: IconProps) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={size}
+      className={className}
     >
       <path
         strokeLinecap="round"
@@ -21,7 +21,7 @@ export const UserIcon = ({ size = "size-6" }: IconProps) => {
   );
 };
 
-export const CartIcon = ({ size = "size-6" }: IconProps) => {
+export const CartIcon = ({ className = "size-6" }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +29,7 @@ export const CartIcon = ({ size = "size-6" }: IconProps) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={size}
+      className={className}
     >
       <path
         strokeLinecap="round"
@@ -40,7 +40,7 @@ export const CartIcon = ({ size = "size-6" }: IconProps) => {
   );
 };
 
-export const HeartIcon = ({ size = "size-6" }: IconProps) => {
+export const HeartIcon = ({ className = "size-6" }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +48,7 @@ export const HeartIcon = ({ size = "size-6" }: IconProps) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={size}
+      className={className}
     >
       <path
         strokeLinecap="round"
@@ -59,7 +59,7 @@ export const HeartIcon = ({ size = "size-6" }: IconProps) => {
   );
 };
 
-export const CheckIcon = ({ size = "size-6" }: IconProps) => {
+export const CheckIcon = ({ className = "size-6" }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -67,7 +67,7 @@ export const CheckIcon = ({ size = "size-6" }: IconProps) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={size}
+      className={className}
     >
       <path
         strokeLinecap="round"
@@ -78,7 +78,7 @@ export const CheckIcon = ({ size = "size-6" }: IconProps) => {
   );
 };
 
-export const EyeIcon = ({ size = "size-6" }: IconProps) => {
+export const EyeIcon = ({ className = "size-6" }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +86,7 @@ export const EyeIcon = ({ size = "size-6" }: IconProps) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={size}
+      className={className}
     >
       <path
         strokeLinecap="round"
@@ -102,7 +102,7 @@ export const EyeIcon = ({ size = "size-6" }: IconProps) => {
   );
 };
 
-export const EyeOffIcon = ({ size = "size-6" }: IconProps) => {
+export const EyeOffIcon = ({ className = "size-6" }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -110,7 +110,7 @@ export const EyeOffIcon = ({ size = "size-6" }: IconProps) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={size}
+      className={className}
     >
       <path
         strokeLinecap="round"
@@ -121,7 +121,7 @@ export const EyeOffIcon = ({ size = "size-6" }: IconProps) => {
   );
 };
 
-export const ShoppingCartIcon = ({ size = "size-6" }: IconProps) => {
+export const ShoppingCartIcon = ({ className = "size-6" }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -129,7 +129,7 @@ export const ShoppingCartIcon = ({ size = "size-6" }: IconProps) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={size}
+      className={className}
     >
       <path
         strokeLinecap="round"
@@ -140,7 +140,7 @@ export const ShoppingCartIcon = ({ size = "size-6" }: IconProps) => {
   );
 };
 
-export const ShoppingBagIcon = ({ size = "size-6" }: IconProps) => {
+export const ShoppingBagIcon = ({ className = "size-6" }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -148,7 +148,7 @@ export const ShoppingBagIcon = ({ size = "size-6" }: IconProps) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={size}
+      className={className}
     >
       <path
         strokeLinecap="round"
@@ -159,7 +159,7 @@ export const ShoppingBagIcon = ({ size = "size-6" }: IconProps) => {
   );
 };
 
-export const InstagramIcon = ({ size = "size-6" }: IconProps) => {
+export const InstagramIcon = ({ className = "size-6" }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -167,7 +167,7 @@ export const InstagramIcon = ({ size = "size-6" }: IconProps) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={size}
+      className={className}
     >
       <path
         d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"
@@ -190,7 +190,7 @@ export const InstagramIcon = ({ size = "size-6" }: IconProps) => {
     </svg>
   );
 };
-export const TiktokIcon = ({ size = "size-6" }: IconProps) => {
+export const TiktokIcon = ({ className = "size-6" }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -198,7 +198,7 @@ export const TiktokIcon = ({ size = "size-6" }: IconProps) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={size}
+      className={className}
     >
       <path
         d="M9.5 22C12.8137 22 15.5 19.3137 15.5 16V8.24537C16.5006 9.04749 17.6981 9.61412 19.0085 9.86122C19.3589 9.92728 19.5341 9.96032 19.7502 9.90446C20.007 9.83809 20.2923 9.6016 20.4051 9.36157C20.5 9.15952 20.5 8.93968 20.5 8.5C20.5 8.04137 20.5 7.81205 20.4499 7.65983C20.3671 7.4079 20.2952 7.31049 20.079 7.15694C19.9483 7.06416 19.6395 6.96876 19.022 6.77796C17.4492 6.29199 16.208 5.05079 15.722 3.47798C15.5312 2.86045 15.4358 2.55169 15.3431 2.42104C15.1895 2.20479 15.0921 2.13294 14.8402 2.05007C14.6879 2 14.4586 2 14 2C13.5341 2 13.3011 2 13.1173 2.07612C12.8723 2.17761 12.6776 2.37229 12.5761 2.61732C12.5 2.80109 12.5 3.03406 12.5 3.5V16C12.5 17.6569 11.1569 19 9.5 19C7.84315 19 6.5 17.6569 6.5 16C6.5 14.8644 7.13101 13.8761 8.06154 13.3667C8.75264 12.9884 9.0982 12.7992 9.19494 12.7057C9.38565 12.5214 9.39434 12.5068 9.46444 12.251C9.5 12.1212 9.5 11.9141 9.5 11.5C9.5 11.0747 9.5 10.8621 9.39825 10.6541C9.28169 10.4159 8.96391 10.1689 8.70429 10.1147C8.47765 10.0674 8.32349 10.1067 8.01518 10.1851C5.41964 10.8459 3.5 13.1988 3.5 16C3.5 19.3137 6.18629 22 9.5 22Z"
@@ -210,7 +210,7 @@ export const TiktokIcon = ({ size = "size-6" }: IconProps) => {
     </svg>
   );
 };
-export const FacebookIcon = ({ size = "size-6" }: IconProps) => {
+export const FacebookIcon = ({ className = "size-6" }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -218,7 +218,7 @@ export const FacebookIcon = ({ size = "size-6" }: IconProps) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={size}
+      className={className}
     >
       <path
         fillRule="evenodd"
@@ -231,7 +231,7 @@ export const FacebookIcon = ({ size = "size-6" }: IconProps) => {
     </svg>
   );
 };
-export const PinterestIcon = ({ size = "size-6" }: IconProps) => {
+export const PinterestIcon = ({ className = "size-6" }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -239,7 +239,7 @@ export const PinterestIcon = ({ size = "size-6" }: IconProps) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={size}
+      className={className}
     >
       <path
         d="M12 11L8 21"
@@ -259,7 +259,7 @@ export const PinterestIcon = ({ size = "size-6" }: IconProps) => {
     </svg>
   );
 };
-export const CashIcon = ({ size = "size-6" }: IconProps) => {
+export const CashIcon = ({ className = "size-6" }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -267,7 +267,7 @@ export const CashIcon = ({ size = "size-6" }: IconProps) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={size}
+      className={className}
     >
       <path
         strokeLinecap="round"
@@ -277,7 +277,7 @@ export const CashIcon = ({ size = "size-6" }: IconProps) => {
     </svg>
   );
 };
-export const SearchIcon = ({ size = "size-6" }: IconProps) => {
+export const SearchIcon = ({ className = "size-6" }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -285,7 +285,7 @@ export const SearchIcon = ({ size = "size-6" }: IconProps) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={size}
+      className={className}
     >
       <path
         strokeLinecap="round"
@@ -295,7 +295,7 @@ export const SearchIcon = ({ size = "size-6" }: IconProps) => {
     </svg>
   );
 };
-export const CrossIcon = ({ size = "size-6" }: IconProps) => {
+export const CrossIcon = ({ className = "size-6" }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -303,7 +303,7 @@ export const CrossIcon = ({ size = "size-6" }: IconProps) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={size}
+      className={className}
     >
       <path
         strokeLinecap="round"
@@ -313,7 +313,7 @@ export const CrossIcon = ({ size = "size-6" }: IconProps) => {
     </svg>
   );
 };
-export const ChevronRightIcon = ({ size = "size-6" }: IconProps) => {
+export const ChevronRightIcon = ({ className = "size-6" }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -321,7 +321,7 @@ export const ChevronRightIcon = ({ size = "size-6" }: IconProps) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={size}
+      className={className}
     >
       <path
         strokeLinecap="round"
@@ -331,7 +331,7 @@ export const ChevronRightIcon = ({ size = "size-6" }: IconProps) => {
     </svg>
   );
 };
-export const CogIcon = ({ size = "size-6" }: IconProps) => {
+export const CogIcon = ({ className = "size-6" }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -339,7 +339,7 @@ export const CogIcon = ({ size = "size-6" }: IconProps) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={size}
+      className={className}
     >
       <path
         strokeLinecap="round"
@@ -349,7 +349,7 @@ export const CogIcon = ({ size = "size-6" }: IconProps) => {
     </svg>
   );
 };
-export const MapPinIcon = ({ size = "size-6" }: IconProps) => {
+export const MapPinIcon = ({ className = "size-6" }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -357,7 +357,7 @@ export const MapPinIcon = ({ size = "size-6" }: IconProps) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={size}
+      className={className}
     >
       <path
         strokeLinecap="round"
@@ -373,7 +373,7 @@ export const MapPinIcon = ({ size = "size-6" }: IconProps) => {
   );
 };
 export const ArrowLeftStartOnRectangleIcon = ({
-  size = "size-6",
+  className = "size-6",
 }: IconProps) => {
   return (
     <svg
@@ -382,7 +382,7 @@ export const ArrowLeftStartOnRectangleIcon = ({
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={size}
+      className={className}
     >
       <path
         strokeLinecap="round"

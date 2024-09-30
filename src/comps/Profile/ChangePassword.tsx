@@ -113,7 +113,7 @@ export default function ChangePassword() {
           ).map(([check, isValid]) => (
             <li key={check} className="flex items-center gap-2">
               {isValid ? (
-                <CheckIcon size="size-4" />
+                <CheckIcon className="size-4" />
               ) : (
                 <span className="w-4 h-4 inline-block" />
               )}

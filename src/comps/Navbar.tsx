@@ -10,9 +10,11 @@ import {
 import Logo from "../assets/images/logo.png";
 import Authentication from "./Authentication";
 import CartandWishlist from "./CartandWishlist";
-import { HeartIcon } from "@/assets/Icons";
+import { HeartIcon, UserIcon } from "@/assets/Icons";
 import { Link } from "react-router-dom";
 import Search from "./Search";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/auth/AuthContext";
 
 export default function Navbar() {
   const flagData = [
@@ -32,9 +34,17 @@ export default function Navbar() {
     return localStorage.getItem("selectedFlag") || "nepal";
   });
 
+  const { isLoggedIn } = useAuth();
+
   useEffect(() => {
     localStorage.setItem("selectedFlag", selectedFlag);
   }, [selectedFlag]);
+
+  const handleWishlistClick = () => {
+    if (!isLoggedIn) {
+      console.log("Please log in to access your wishlist");
+    }
+  };
 
   return (
     <div className="flex justify-between items-center p-4">
@@ -70,10 +80,22 @@ export default function Navbar() {
       </Link>
       <div className="flex gap-3 items-center">
         <Search />
-        <Authentication />
-        <Link to="/profile/my-wishlist">
-          <HeartIcon />
-        </Link>
+        {isLoggedIn ? (
+          <Link to="/profile">
+            <UserIcon />
+          </Link>
+        ) : (
+          <Authentication />
+        )}
+        {isLoggedIn ? (
+          <Link to="/profile/my-wishlist">
+            <HeartIcon />
+          </Link>
+        ) : (
+          <Button onClick={handleWishlistClick} variant="ghost" className="p-0">
+            <HeartIcon />
+          </Button>
+        )}
         <CartandWishlist />
       </div>
     </div>

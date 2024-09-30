@@ -15,25 +15,25 @@ export default function Footer() {
           <h1>Let's Hang</h1>
           <ul className="flex flex-col gap-2">
             <li className="text-xs flex items-center gap-2 text-muted-foreground">
-              <InstagramIcon size="size-5 text-black" />
+              <InstagramIcon className="size-5 text-black" />
               <a href="" target="_blank">
                 Instagram
               </a>
             </li>
             <li className="text-xs text-muted-foreground flex items-center gap-2">
-              <TiktokIcon size="size-5 text-black" />
+              <TiktokIcon className="size-5 text-black" />
               <a href="" target="_blank">
                 Tiktok
               </a>
             </li>
             <li className="text-xs text-muted-foreground flex items-center gap-2">
-              <FacebookIcon size="size-5 text-black" />
+              <FacebookIcon className="size-5 text-black" />
               <a href="" target="_blank">
                 Facebook
               </a>
             </li>
             <li className="text-xs text-muted-foreground flex items-center gap-2">
-              <PinterestIcon size="size-5 text-black" />
+              <PinterestIcon className="size-5 text-black" />
               <a href="" target="_blank">
                 Pinterest
               </a>
@@ -115,7 +115,7 @@ export default function Footer() {
             width={24}
             className="aspect-square"
           />
-          <CashIcon size="text-green-600 size-6" />
+          <CashIcon className="text-green-600 size-6" />
         </div>
       </div>
     </div>
