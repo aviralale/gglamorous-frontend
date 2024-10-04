@@ -1,5 +1,6 @@
 import { useState, useEffect, ChangeEvent } from "react";
 import { CheckIcon, EyeIcon, EyeOffIcon } from "@/assets/Icons";
+import { axiosInstance } from "@/auth/auth";
 
 interface PasswordChecks {
   length: boolean;
@@ -54,10 +55,26 @@ export default function ChangePassword() {
     if (passwordsMatch === null) return "border-gray-300";
     return passwordsMatch ? "border-green-500" : "border-red-500";
   };
-  return (
-    <div className="flex flex-col gap-3">
-      <h1 className="text-xl">Change password</h1>
 
+  const data = {
+    current_password: currentPassword,
+    new_password: password,
+    re_new_password: confirmPassword,
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      axiosInstance.post("auth/users/set_password/", data);
+      console.log("password changed");
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+      <h1 className="text-xl">Change password</h1>
       <div className="relative">
         <input
           type={showCurrentPassword ? "text" : "password"}
@@ -143,6 +160,6 @@ export default function ChangePassword() {
             Change password
           </button>
         )}
-    </div>
+    </form>
   );
 }
