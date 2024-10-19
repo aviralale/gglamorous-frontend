@@ -44,6 +44,21 @@ export interface Cart {
   user: number;
   products: number[];
 }
+export interface WishlistItem {
+  id: number;
+  product: Product;
+  size: string;
+  quantity: number;
+  cart: number;
+}
+
+export interface WishList {
+  id: number;
+  wishlist_items: WishlistItem[];
+  created_at: string;
+  user: number;
+  products: number[];
+}
 
 export interface OrderItem {
   product: Product;
