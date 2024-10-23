@@ -20,8 +20,8 @@ export interface Product {
   fabric_and_care: string;
   price: string;
   stock: number;
-  sizes: { [key: string]: number };
-  colors: { [key: string]: string };
+  sizes: Record<string, number>;
+  colors: Record<string, string>;
   is_sale: boolean;
   sale_price: string | null;
   slug: string;

@@ -6,18 +6,18 @@ import WishListCard from "./WishlistCard";
 export default function WishList() {
   const { wishList, products, removeFromWishList } = useWishList();
 
-  const calculateTotal = () => {
-    return (wishList?.wishlist_items || []).reduce((total, item) => {
-      const product = products.find((p) => p.id === item.product.id);
-      if (product) {
-        const price = product.is_sale
-          ? parseFloat(product.sale_price || "0")
-          : parseFloat(product.price);
-        return total + price;
-      }
-      return total;
-    }, 0);
-  };
+  // const calculateTotal = () => {
+  //   return (wishList?.wishlist_items || []).reduce((total, item) => {
+  //     const product = products.find((p) => p.id === item.product.id);
+  //     if (product) {
+  //       const price = product.is_sale
+  //         ? parseFloat(product.sale_price || "0")
+  //         : parseFloat(product.price);
+  //       return total + price;
+  //     }
+  //     return total;
+  //   }, 0);
+  // };
 
   // const total = calculateTotal();
   // const deliveryCharge = 100;
