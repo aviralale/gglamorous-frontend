@@ -27,7 +27,7 @@ export default function WishList() {
       <EmptyCard
         icon={<HeartIcon />}
         title="You have no saved items"
-        description="Looks like you haven't added any items to your wishlist yet"
+        description="Looks like you haven't added any items yet"
       />
     );
   }

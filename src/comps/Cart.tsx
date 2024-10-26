@@ -9,6 +9,7 @@ import {
 import CartCard from "./CartCard";
 import { useCart } from "@/contexts/CartContext";
 import { axiosInstance } from "@/auth/auth";
+import EmptyCard from "./reusables/EmptyCard";
 
 interface Address {
   id: number;
@@ -101,11 +102,11 @@ export default function Cart() {
 
   if (!cart || cart.items.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center h-96 text-gray-500">
-        <ShoppingCart className="w-16 h-16 mb-4" />
-        <h2 className="text-xl font-semibold mb-2">Your cart is empty</h2>
-        <p>Looks like you haven't added any items yet</p>
-      </div>
+      <EmptyCard
+        icon={<ShoppingCart />}
+        title="Your cart is empty"
+        description="Looks like you haven't added any items yet"
+      />
     );
   }
 

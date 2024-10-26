@@ -64,20 +64,8 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="p-4">
         <div className="space-y-8">
-          <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-              Our Products
-            </h1>
-            {products.length > 0 && (
-              <p className="text-gray-500">
-                Showing {products.length} product
-                {products.length === 1 ? "" : "s"}
-              </p>
-            )}
-          </div>
-
           {products.length === 0 ? (
             <div className="flex h-64 items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-white">
               <div className="text-center">

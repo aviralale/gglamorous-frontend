@@ -11,6 +11,7 @@ import { AuthProvider } from "./auth/AuthContext";
 import PrivateRoute from "./auth/PrivateRoute";
 import { CartProvider } from "./contexts/CartContext";
 import { WishListProvider } from "./contexts/WishListContext";
+import { ProductPageWrapper } from "./pages/ProductPage";
 
 export default function App() {
   return (
@@ -21,6 +22,10 @@ export default function App() {
             <Routes>
               {/* Profile Route */}
               <Route path="/" element={<HomePage />} />
+              <Route
+                path="products/:productSlug"
+                element={<ProductPageWrapper />}
+              />
               <Route path="/profile" element={<Profile />}>
                 <Route element={<PrivateRoute />}>
                   <Route index element={<Navigate to="my-details" replace />} />

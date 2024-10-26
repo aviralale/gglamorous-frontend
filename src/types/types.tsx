@@ -11,22 +11,28 @@ export interface Category {
   slug: string;
 }
 
+interface SizeAvailability {
+  size: string;
+  stock: number;
+  available: boolean;
+}
+
 export interface Product {
   id: number;
-  images: Image[];
-  category: Category;
   name: string;
-  description: string;
-  fabric_and_care: string;
-  price: string;
-  stock: number;
-  sizes: Record<string, number>;
-  colors: Record<string, string>;
-  is_sale: boolean;
-  sale_price: string | null;
   slug: string;
-  created_at: string;
-  updated_at: string;
+  description: string;
+  colors: Record<string, string>;
+  price: string;
+  is_sale: boolean;
+  is_new: boolean;
+  sale_price: string | null;
+  category: Category;
+  images: Image[];
+  available_sizes: SizeAvailability[];
+  in_stock: boolean;
+  availability_status: string;
+  discount_percentage: number;
 }
 
 export interface CartItem {

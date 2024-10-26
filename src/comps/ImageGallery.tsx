@@ -11,7 +11,7 @@ export const ImageGallery = ({ images, productName }: ImageGalleryProps) => {
 
   return (
     <div className="w-full">
-      <div className="aspect-square w-full overflow-hidden rounded-lg">
+      <div className="aspect-square w-full overflow-hidden">
         <img
           src={selectedImage}
           alt={productName}
@@ -23,7 +23,7 @@ export const ImageGallery = ({ images, productName }: ImageGalleryProps) => {
           <button
             key={image.id}
             onClick={() => setSelectedImage(image.image)}
-            className={`relative h-16 w-16 overflow-hidden rounded-md ${
+            className={`relative h-16 w-16 overflow-hidden  ${
               selectedImage === image.image ? "ring-2 ring-blue-500" : ""
             }`}
           >
