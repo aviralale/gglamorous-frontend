@@ -36,35 +36,35 @@ export default function AddressBook() {
 
   return (
     <div className="container mx-auto px-4">
-      <div className="flex items-baseline gap-6 mb-6">
+      <div className="flex items-baseline justify-between gap-6 mb-6">
         <h1 className="text-2xl font-bold">Address Book</h1>
         <p className="text-muted-foreground text-sm">
           {addresses.length} Saved Addresses
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
         {addresses.length > 0 ? (
           addresses.map((address) => (
             <div
               key={address.id}
-              className={`border p-4 ${
+              className={`flex flex-col justify-between border p-4 aspect-square ${
                 address.is_default ? "border-black" : "border-gray-400"
-              } shadow-md hover:shadow-lg transition-shadow duration-300`}
+              }`}
             >
-              <h2 className="font-semibold text-lg mb-2">
-                {address.address_name}{" "}
-                {address.is_default && (
-                  <span className="bg-green-200 text-green-800 px-2 rounded-xl text-xs">
-                    Default
-                  </span>
-                )}
-              </h2>
-              <p className="text-sm mb-1">
-                Recipient: {address.recipient_name}
+              <div className="flex items-baseline justify-between ">
+                <h2 className="font-semibold uppercase underline truncate mb-2">
+                  {address.address_name}
+                </h2>
+              </div>
+              <div>
+                <p className="uppercase  mb-1">{address.recipient_name}</p>
+                <p className="text-sm mb-1">{address.street_name} Street</p>
+                <p className="text-sm mb-1">{address.city} City</p>
+                <p className="text-sm mb-1">Phone: {address.phone_number}</p>
+              </div>
+              <p className="text-xs text-muted-foreground italic">
+                {address.is_default && "Default address"}
               </p>
-              <p className="text-sm mb-1">Street: {address.street_name}</p>
-              <p className="text-sm mb-1">City: {address.city}</p>
-              <p className="text-sm mb-1">Phone: {address.phone_number}</p>
             </div>
           ))
         ) : (

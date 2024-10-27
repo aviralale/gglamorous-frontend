@@ -35,17 +35,19 @@ export default function MyOrders() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-6">My Orders</h1>
-      {orders.length > 0 ? (
-        orders.map((order) => <OrderCard key={order.id} order={order} />)
-      ) : (
-        <EmptyCard
-          icon={<ShoppingCartIcon />}
-          title="You have no orders"
-          description="Looks like you haven't ordered any items yet"
-        />
-      )}
-    </div>
+    <>
+      <h1 className="text-2xl font-bold mb-6 uppercase">My Orders</h1>
+      <div className="container py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 ">
+        {orders.length > 0 ? (
+          orders.map((order) => <OrderCard key={order.id} order={order} />)
+        ) : (
+          <EmptyCard
+            icon={<ShoppingCartIcon />}
+            title="You have no orders"
+            description="Looks like you haven't ordered any items yet"
+          />
+        )}
+      </div>
+    </>
   );
 }

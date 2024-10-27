@@ -10,9 +10,11 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   return (
     <>
-      <Navbar />
-      <CategoriesNav />
-      <div>{children}</div>
+      <div className="fixed z-10 w-full bg-white">
+        <Navbar />
+        <CategoriesNav />
+      </div>
+      <div className="pt-44">{children}</div>
       <Footer />
     </>
   );

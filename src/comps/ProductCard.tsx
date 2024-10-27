@@ -15,9 +15,16 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           alt={product.name}
           className="h-full w-full aspect-[3/4] object-cover object-center"
         />
-        <span className="absolute uppercase bg-white top-2 p-2 py-1 left-2">
-          {product.category.name}
-        </span>
+        <div className="absolute top-2 px-2 flex justify-between w-full">
+          {product.is_new && (
+            <span className=" uppercase bg-white p-2 py-1">new in</span>
+          )}
+          {product.is_sale && (
+            <span className=" uppercase bg-green-500 text-white p-2 py-1">
+              on sale
+            </span>
+          )}
+        </div>
         <div className="absolute bottom-0 bg-white w-full opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out">
           {reversedSizes.map((sizeInfo) => (
             <button
@@ -31,7 +38,9 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         </div>
       </div>
       <div className="mt-4 flex flex-col justify-between">
-        <h3 className=" uppercase truncate">{product.name}</h3>
+        <h3 className=" uppercase truncate group-hover:underline">
+          {product.name}
+        </h3>
         <div className="flex items-center gap-2">
           <p className="text-sm line-through font-medium text-red-500 text-muted-foreground">
             {product.is_sale ? `NPR ${product?.sale_price}` : ""}
