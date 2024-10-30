@@ -50,7 +50,7 @@ const CartCard: React.FC<CartCardProps> = ({
           <div className="flex flex-col">
             <h3 className="font-semibold text-lg">{product.name}</h3>
             <p className="text-sm text-gray-600">
-              Size: {item.size} · Quantity: {item.quantity}
+              Size: {item.size} · × {item.quantity}
             </p>
             <div className="flex items-center gap-2">
               <span

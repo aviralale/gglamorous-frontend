@@ -12,6 +12,8 @@ import PrivateRoute from "./auth/PrivateRoute";
 import { CartProvider } from "./contexts/CartContext";
 import { WishListProvider } from "./contexts/WishListContext";
 import { ProductPageWrapper } from "./pages/ProductPage";
+import CategoryPage from "./pages/CategoryPage";
+import StaticCategory from "./pages/StaticCategory";
 
 export default function App() {
   return (
@@ -26,6 +28,11 @@ export default function App() {
                 path="products/:productSlug"
                 element={<ProductPageWrapper />}
               />
+              <Route
+                path="category/:category_slug"
+                element={<CategoryPage />}
+              />
+              <Route path="c/:staticType" element={<StaticCategory />} />
               <Route path="/profile" element={<Profile />}>
                 <Route element={<PrivateRoute />}>
                   <Route index element={<Navigate to="my-details" replace />} />

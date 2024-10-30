@@ -13,11 +13,7 @@ interface WishListContextType {
   products: Product[];
   fetchWishList: () => Promise<void>;
   fetchProducts: () => Promise<void>;
-  addToWishList: (
-    productId: number,
-    size: string,
-    quantity: number
-  ) => Promise<void>;
+  addToWishList: (productId: number, size: string) => Promise<void>;
   removeFromWishList: (itemId: number) => Promise<void>;
 }
 
@@ -49,16 +45,11 @@ export const WishListProvider: React.FC<PropsWithChildren<{}>> = ({
     }
   };
 
-  const addToWishList = async (
-    productId: number,
-    size: string,
-    quantity: number
-  ) => {
+  const addToWishList = async (productId: number, size: string) => {
     try {
       await axiosInstance.post("/wishlists/add_item/", {
         product: productId,
         size,
-        quantity,
       });
       await fetchWishList();
     } catch (error) {

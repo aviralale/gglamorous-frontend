@@ -80,3 +80,20 @@ export interface Order {
   created_at: string;
   items: OrderItem[];
 }
+
+export interface SearchResponse {
+  data: Product[];
+  total: number;
+  page: number;
+  per_page: number;
+}
+
+export interface SearchParams {
+  q?: string;
+  category_slug?: string;
+  category_id?: string;
+  min_price?: number;
+  max_price?: number;
+  page?: number;
+  per_page?: number;
+}

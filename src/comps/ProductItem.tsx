@@ -49,7 +49,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
       </div>
       <p>Price: ${product.is_sale ? product.sale_price : product.price}</p>
       <p>Description: {product.description}</p>
-      <p>Fabric and Care: {product.fabric_and_care}</p>
+      <p>Fabric and Care: {product?.fabric_and_care}</p>
       <div className="color-options">
         {Object.entries(product.colors).map(([colorName, colorCode]) => (
           <div

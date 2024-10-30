@@ -5,6 +5,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useCart } from "@/contexts/CartContext";
+import { HeartIcon } from "@/assets/Icons";
+import { useWishList } from "@/contexts/WishListContext";
+import { useAuth } from "@/auth/AuthContext";
 
 interface Size {
   size: string;
@@ -50,16 +54,24 @@ interface ProductDetailsProps {
   onAddToCart: (size: string, color: string) => void;
 }
 
-export const ProductDetails = ({
-  product,
-  onAddToCart,
-}: ProductDetailsProps) => {
+export const ProductDetails = ({ product }: ProductDetailsProps) => {
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [selectedColor, setSelectedColor] = useState<string>("");
+  const [quantity, setQuantity] = useState<string>("1");
+  const { cart, addToCart } = useCart();
+  const { addToWishList } = useWishList();
+  const { isLoggedIn } = useAuth();
 
   const handleAddToCart = () => {
     if (selectedSize && selectedColor) {
-      onAddToCart(selectedSize, selectedColor);
+      addToCart(cart, `${product.id}`, selectedSize, selectedColor, quantity);
+      console.log("success");
+    }
+  };
+  const handleAddToWishList = () => {
+    if (selectedSize && selectedColor) {
+      addToWishList(product.id, selectedSize);
+      console.log("success");
     }
   };
   const reversedSizes = [...product.available_sizes].reverse();
@@ -88,7 +100,7 @@ export const ProductDetails = ({
 
       <div>
         <h3 className="text-sm font-medium text-gray-900">Sizes</h3>
-        <div className="mt-2 flex gap-2">
+        <div className="mt-2 flex gap-2 ">
           {reversedSizes.map((sizeInfo) => (
             <button
               key={sizeInfo.size}
@@ -124,14 +136,35 @@ export const ProductDetails = ({
           ))}
         </div>
       </div>
-
-      <button
-        onClick={handleAddToCart}
-        disabled={!selectedSize || !selectedColor}
-        className="w-full uppercase border transition-all duration-200 ease-in-out border-black px-4 py-2 text-black hover:bg-black hover:text-white disabled:text-muted-foreground disabled:bg-transparent disabled:cursor-not-allowed"
-      >
-        Add to Cart
-      </button>
+      <div className="flex gap-2 flex-col">
+        <label htmlFor="quantity" className="text-sm font-medium text-gray-900">
+          Quantity:
+        </label>
+        <input
+          name="quantity"
+          id="quantity"
+          type="number"
+          value={quantity}
+          onChange={(e) => setQuantity(e.target.value)}
+          className="border border-black w-8 rounded-md h-8 p-1 text-center outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+        />
+      </div>
+      <div className="flex gap-2">
+        <button
+          onClick={handleAddToCart}
+          disabled={!isLoggedIn || !selectedSize || !selectedColor}
+          className="w-full uppercase border transition-all duration-200 ease-in-out border-black px-4 py-2 text-black hover:bg-black hover:text-white disabled:text-muted-foreground disabled:bg-transparent disabled:cursor-not-allowed"
+        >
+          Add to Cart
+        </button>
+        <button
+          onClick={handleAddToWishList}
+          disabled={!isLoggedIn || !selectedSize}
+          className="aspect-square uppercase border transition-all duration-200 ease-in-out border-black p-2 text-black hover:bg-black hover:text-white disabled:text-muted-foreground disabled:bg-transparent disabled:cursor-not-allowed"
+        >
+          <HeartIcon />
+        </button>
+      </div>
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="item-1">
           <AccordionTrigger className="uppercase">

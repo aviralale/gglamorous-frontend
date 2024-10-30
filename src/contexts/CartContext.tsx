@@ -14,9 +14,11 @@ interface CartContextType {
   fetchCart: () => Promise<void>;
   fetchProducts: () => Promise<void>;
   addToCart: (
-    productId: number,
+    cart: Cart | null,
+    productId: string,
     size: string,
-    quantity: number
+    color: string,
+    quantity: string
   ) => Promise<void>;
   removeFromCart: (itemId: number) => Promise<void>;
 }
@@ -46,16 +48,22 @@ export const CartProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   };
 
   const addToCart = async (
-    productId: number,
+    cart: Cart | null,
+    productId: string,
     size: string,
-    quantity: number
+    color: string,
+    quantity: string
   ) => {
     try {
-      await axiosInstance.post("/cart-items/", {
+      const payload = {
+        cart: cart?.id || null,
         product: productId,
-        size,
+        size: size,
+        color,
         quantity,
-      });
+      };
+
+      await axiosInstance.post("/cart-items/", payload);
       await fetchCart();
     } catch (error) {
       console.error("Error adding to cart:", error);

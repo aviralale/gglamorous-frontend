@@ -37,7 +37,7 @@ export default function MyOrders() {
   return (
     <>
       <h1 className="text-2xl font-bold mb-6 uppercase">My Orders</h1>
-      <div className="container py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 ">
+      <div className="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 ">
         {orders.length > 0 ? (
           orders.map((order) => <OrderCard key={order.id} order={order} />)
         ) : (

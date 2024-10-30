@@ -4,15 +4,23 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Cart from "./Cart";
 import Wishlist from "./WishList";
+import { useCart } from "@/contexts/CartContext";
+import { useWishList } from "@/contexts/WishListContext";
 
 export default function CartandWishlist() {
+  const { cart } = useCart();
+  const { wishList } = useWishList();
   return (
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="link" className="p-0 relative">
           <CartIcon />
           <span className="absolute top-0 -right-1 text-xs font-semibold">
-            0
+            {cart?.items
+              ? wishList?.wishlist_items
+                ? cart?.items.length + wishList?.wishlist_items.length
+                : cart?.items?.length
+              : 0}
           </span>
         </Button>
       </SheetTrigger>

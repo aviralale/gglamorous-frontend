@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 const OrderCard: React.FC<{ order: Order }> = ({ order }) => {
   return (
     <div className="border aspect-[3/4] p-4 flex flex-col justify-between">
-      <div className="flex justify-between items-center mb-2">
+      <div className="flex justify-between items-center ">
         <h3 className="text-lg uppercase">order #{order.id}</h3>
         <div className="flex gap-4">
           <span
@@ -35,7 +35,6 @@ const OrderCard: React.FC<{ order: Order }> = ({ order }) => {
         </div>
       </div>
       <div className="mt-4">
-        <h4 className="font-medium mb-2">Items:</h4>
         <div className="flex">
           <Carousel className="w-full max-w-xs">
             {/* {order.items.map((item, index) => ( */}
@@ -52,7 +51,9 @@ const OrderCard: React.FC<{ order: Order }> = ({ order }) => {
                             className="h-60 aspect-square object-cover rounded"
                           />
                           <div className="w-full flex flex-col items-center uppercase">
-                            <p className="font-medium">{item.product.name}</p>
+                            <p className="font-medium text-center">
+                              {item.product.name}
+                            </p>
                             <div className="flex gap-2">
                               <p className="text-sm">
                                 <span className="text-sm flex gap-2">
