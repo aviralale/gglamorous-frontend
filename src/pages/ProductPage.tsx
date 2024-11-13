@@ -9,9 +9,10 @@ import { ProductDetails } from "@/comps/ProductDetail";
 
 interface ProductPageProps {
   product: Product;
+  productSlug: string;
 }
 
-const ProductPage = ({ product }: ProductPageProps) => {
+const ProductPage = ({ product, productSlug }: ProductPageProps) => {
   const handleAddToCart = (size: string, color: string) => {
     console.log(
       `Added to cart: ${product.name} - Size: ${size}, Color: ${color}`
@@ -22,7 +23,11 @@ const ProductPage = ({ product }: ProductPageProps) => {
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <ImageGallery images={product.images} productName={product.name} />
-        <ProductDetails product={product} onAddToCart={handleAddToCart} />
+        <ProductDetails
+          productSlug={productSlug}
+          product={product}
+          onAddToCart={handleAddToCart}
+        />
       </div>
     </div>
   );
@@ -40,6 +45,12 @@ export const ProductPageWrapper = () => {
       try {
         setLoading(true);
         setError(null);
+
+        if (!productSlug) {
+          setError("Product slug not found in the URL");
+          return;
+        }
+
         const response = await axiosInstance.get<Product>(
           `/products/${productSlug}/`
         );
@@ -56,9 +67,7 @@ export const ProductPageWrapper = () => {
       }
     };
 
-    if (productSlug) {
-      fetchProduct();
-    }
+    fetchProduct();
   }, [productSlug]);
 
   if (loading) {
@@ -104,5 +113,5 @@ export const ProductPageWrapper = () => {
     );
   }
 
-  return <ProductPage product={product} />;
+  return <ProductPage product={product} productSlug={productSlug || ""} />;
 };

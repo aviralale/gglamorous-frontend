@@ -48,7 +48,7 @@ export const WishListProvider: React.FC<PropsWithChildren<{}>> = ({
   const addToWishList = async (productId: number, size: string) => {
     try {
       await axiosInstance.post("/wishlists/add_item/", {
-        product: productId,
+        product_id: productId,
         size,
       });
       await fetchWishList();

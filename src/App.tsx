@@ -14,6 +14,8 @@ import { WishListProvider } from "./contexts/WishListContext";
 import { ProductPageWrapper } from "./pages/ProductPage";
 import CategoryPage from "./pages/CategoryPage";
 import StaticCategory from "./pages/StaticCategory";
+import Login from "./comps/Login";
+import Register from "./comps/Register";
 
 export default function App() {
   return (
@@ -24,6 +26,8 @@ export default function App() {
             <Routes>
               {/* Profile Route */}
               <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
               <Route
                 path="products/:productSlug"
                 element={<ProductPageWrapper />}

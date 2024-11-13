@@ -7,7 +7,9 @@ export default function MyWishList() {
   const { wishList, products, removeFromWishList } = useWishList();
 
   const calculateTotal = () => {
-    return (wishList?.wishlist_items || []).reduce((total, item) => {
+    if (!wishList || !wishList.wishlist_items) return 0;
+
+    return wishList.wishlist_items.reduce((total, item) => {
       const product = products.find((p) => p.id === item.product.id);
       if (product) {
         const price = product.is_sale
@@ -19,10 +21,14 @@ export default function MyWishList() {
     }, 0);
   };
 
-  // const total = calculateTotal();
-  // const deliveryCharge = 100;
+  const total = calculateTotal();
+  const deliveryCharge = 100;
 
-  if (!wishList || wishList.wishlist_items.length === 0) {
+  if (
+    !wishList ||
+    !wishList.wishlist_items ||
+    wishList.wishlist_items.length === 0
+  ) {
     return (
       <EmptyCard
         icon={<HeartIcon />}
@@ -51,7 +57,7 @@ export default function MyWishList() {
           return null;
         })}
       </div>
-      {/* <div className="wishlist-total absolute w-full left-0 bottom-0 bg-gray-200 py-5 px-3">
+      <div className="wishlist-total absolute w-full left-0 bottom-0 bg-gray-200 py-5 px-3">
         <div className="flex justify-between items-center mb-2">
           <span className="text-sm">Subtotal:</span>
           <span className="text-sm font-semibold">NPR. {total.toFixed(2)}</span>
@@ -64,10 +70,10 @@ export default function MyWishList() {
         <div className="flex justify-between items-center">
           <span className="text-base font-semibold">Total:</span>
           <span className="text-base font-semibold">
-            NPR. {total.toFixed(2)}
+            NPR. {(total + deliveryCharge).toFixed(2)}
           </span>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }

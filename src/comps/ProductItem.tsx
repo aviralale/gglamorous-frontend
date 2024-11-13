@@ -10,10 +10,10 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(1);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const { addToCart } = useCart();
+  const { cart, addToCart } = useCart();
 
   const handleAddToCart = () => {
-    addToCart(product.id, selectedSize, quantity)
+    addToCart(cart, product.id, selectedSize, quantity)
       .then(() => {
         alert("Product added to cart");
         setSelectedSize("");

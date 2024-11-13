@@ -10,6 +10,7 @@ import CartCard from "./CartCard";
 import { useCart } from "@/contexts/CartContext";
 import { axiosInstance } from "@/auth/auth";
 import EmptyCard from "./reusables/EmptyCard";
+import { toast } from "react-toastify";
 
 interface Address {
   id: number;
@@ -68,7 +69,7 @@ export default function Cart() {
 
   const createOrder = async () => {
     if (!selectedAddress) {
-      alert("Please select a delivery address");
+      toast.error("Please select a delivery address");
       return;
     }
 
@@ -79,7 +80,7 @@ export default function Cart() {
         products: orderItems.map((item) => ({
           product: item.product,
           quantity: item.quantity,
-          stock: item.stock || 1,
+          stock: item.quantity || 1,
         })),
       };
 
@@ -89,11 +90,11 @@ export default function Cart() {
           await removeFromCart(item.id);
         }
         setIsAddressModalOpen(false);
-        alert("Order placed successfully!");
+        toast.success("Order placed successfully!");
       }
     } catch (error) {
       console.error("Error creating order:", error);
-      alert("Failed to place order. Please try again.");
+      toast.error("Failed to place order. Please try again.");
     }
   };
 

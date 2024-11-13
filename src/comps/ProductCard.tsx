@@ -42,23 +42,17 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           {product.name}
         </h3>
         <div className="flex items-center gap-2">
-          <p className="text-sm line-through font-medium text-red-500 text-muted-foreground">
-            {product.is_sale ? `NPR ${product?.sale_price}` : ""}
-          </p>
-          <p className="text-sm font-medium text-muted-foreground">
+          <p
+            className={`text-sm ${
+              product.is_sale ? "line-through" : ""
+            } font-medium text-red-500 text-muted-foreground`}
+          >
             NPR {product.price}
           </p>
+          <p className="text-sm font-medium text-muted-foreground">
+            {product.is_sale ? `NPR ${product?.sale_price}` : ""}
+          </p>
         </div>
-      </div>
-      <div className="flex gap-2 mt-2">
-        {Object.entries(product.colors).map(([colorName, colorCode]) => (
-          <div
-            key={colorName}
-            className="w-4 h-4 rounded-full border border-gray-200"
-            style={{ backgroundColor: colorCode }}
-            title={colorName}
-          />
-        ))}
       </div>
     </Link>
   );

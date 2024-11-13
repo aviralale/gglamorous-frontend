@@ -17,6 +17,17 @@ interface SizeAvailability {
   available: boolean;
 }
 
+interface AverageRating {
+  overall: number;
+  quality: number;
+  value: number;
+}
+
+interface Ratings {
+  average: AverageRating;
+  total_reviews: 2;
+}
+
 export interface Product {
   id: number;
   name: string;
@@ -33,6 +44,10 @@ export interface Product {
   in_stock: boolean;
   availability_status: string;
   discount_percentage: number;
+  ratings: Ratings;
+  fabric_and_care?: string;
+  sizes: SizeAvailability;
+  stock: number;
 }
 
 export interface CartItem {
@@ -96,4 +111,25 @@ export interface SearchParams {
   max_price?: number;
   page?: number;
   per_page?: number;
+}
+
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+export interface Review {
+  id: number;
+  product: number;
+  product_name: string;
+  user: User;
+  quality_rating: number;
+  value_rating: number;
+  size: string;
+  comment: string;
+  image: string;
+  image_url: string;
+  average_rating: number;
+  created_at: string;
 }

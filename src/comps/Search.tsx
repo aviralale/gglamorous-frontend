@@ -10,8 +10,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Loader } from "lucide-react";
 import { productApi } from "@/services/productApi";
 import { Product, SearchParams } from "@/types/types";
-import { AxiosError } from "axios";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Search: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -42,21 +42,12 @@ const Search: React.FC = () => {
         setResults(response);
       } else if (response.data && Array.isArray(response.data)) {
         setResults(response.data);
-      } else if (typeof response === "object") {
-        // If response is a paginated object
-        const products = response.results || response.products || [];
-        setResults(products);
       } else {
         setResults([]);
       }
     } catch (err) {
       console.error("Search error:", err);
-      const error = err as AxiosError;
-      setError(
-        error.response?.data?.message ||
-          error.message ||
-          "An error occurred while searching"
-      );
+      toast.error("Error while searching");
     } finally {
       setLoading(false);
     }
@@ -92,30 +83,34 @@ const Search: React.FC = () => {
   const ProductCard: React.FC<{ product: Product }> = ({ product }) => (
     <Link
       to={`/products/${product.slug}`}
-      className="border rounded-lg p-4 hover:shadow-lg transition-shadow"
+      className="border flex gap-2  p-4 hover:shadow-lg transition-shadow"
       onClick={() => setOpen(false)} // Close drawer when clicking a product
     >
       {product.images?.[0] && (
         <img
           src={product.images[0].image}
           alt={product.name}
-          className="w-full h-48 object-cover rounded-md"
+          className="w-24 h-24 object-cover rounded-md"
         />
       )}
-      <h3 className="mt-2 text-lg font-semibold">{product.name}</h3>
-      <p className="text-muted-foreground mt-1">{product.category?.name}</p>
-      <p className="font-medium mt-2">NPR {product.price}</p>
-      {product.is_sale && (
-        <span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full mt-2 inline-block">
-          On Sale
-        </span>
-      )}
+      <div>
+        <h3 className="mt-2 text-sm font-semibold">{product.name}</h3>
+        <p className="text-muted-foreground text-xs mt-1">
+          {product.category?.name}
+        </p>
+        <p className="font-medium mt-2 text-xs">NPR {product.price}</p>
+        {product.is_sale && (
+          <span className="bg-red-100 text-red-800 text-xs px-1 rounded-full mt-2 inline-block">
+            On Sale
+          </span>
+        )}
+      </div>
     </Link>
   );
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger className="uppercase text-muted-foreground flex gap-2">
+      <DrawerTrigger className="w-full  h-auto sm:w-auto uppercase text-muted-foreground flex gap-2">
         <SearchIcon className="text-black size-6" /> Search
       </DrawerTrigger>
       <DrawerContent>
@@ -160,7 +155,7 @@ const Search: React.FC = () => {
             )}
 
             {!loading && !error && results && results.length > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2">
                 {results.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}

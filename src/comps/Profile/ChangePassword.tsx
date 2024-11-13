@@ -1,6 +1,7 @@
 import { useState, useEffect, ChangeEvent } from "react";
 import { CheckIcon, EyeIcon, EyeOffIcon } from "@/assets/Icons";
 import { axiosInstance } from "@/auth/auth";
+import { toast } from "react-toastify";
 
 interface PasswordChecks {
   length: boolean;
@@ -47,6 +48,7 @@ export default function ChangePassword() {
   const toggleCurrentPasswordVisibility = (): void => {
     setShowCurrentPassword(!showCurrentPassword);
   };
+
   const toggleNewPasswordVisibility = (): void => {
     setShowNewPassword(!showNewPassword);
   };
@@ -65,101 +67,119 @@ export default function ChangePassword() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      axiosInstance.post("auth/users/set_password/", data);
-      console.log("password changed");
+      await axiosInstance.post("auth/users/set_password/", data);
+      toast.success("Password changed successfully");
+      setCurrentPassword("");
+      setPassword("");
+      setConfirmPassword("");
     } catch (error: any) {
-      console.log(error);
+      console.error(error);
+      toast.error("Failed to change password");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-      <h1 className="text-xl">Change password</h1>
-      <div className="relative">
-        <input
-          type={showCurrentPassword ? "text" : "password"}
-          className="w-full py-2 border px-4 text-sm outline-none pr-10"
-          placeholder="Current Password *"
-          value={currentPassword}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setCurrentPassword(e.target.value)
-          }
-          required
-        />
-        <button
-          type="button"
-          onClick={toggleCurrentPasswordVisibility}
-          className="absolute right-2 top-1/2 transform -translate-y-1/2"
-        >
-          {showCurrentPassword ? <EyeOffIcon /> : <EyeIcon />}
-        </button>
-      </div>
-      <div className="relative">
-        <input
-          type={showNewPassword ? "text" : "password"}
-          className="w-full py-2 border px-4 text-sm outline-none pr-10"
-          placeholder="New Password *"
-          value={password}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setPassword(e.target.value)
-          }
-          required
-        />
-        <button
-          type="button"
-          onClick={toggleNewPasswordVisibility}
-          className="absolute right-2 top-1/2 transform -translate-y-1/2"
-        >
-          {showNewPassword ? <EyeOffIcon /> : <EyeIcon />}
-        </button>
-      </div>
-      <input
-        type="password"
-        className={`py-2 border px-4 text-sm outline-none ${getConfirmPasswordBorderColor()}`}
-        placeholder="Retype Password *"
-        value={confirmPassword}
-        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          setConfirmPassword(e.target.value)
-        }
-        required
-      />
-      <div className="text-xs">
-        <ul>
-          {(
-            Object.entries(passwordChecks) as [keyof PasswordChecks, boolean][]
-          ).map(([check, isValid]) => (
-            <li key={check} className="flex items-center gap-2">
-              {isValid ? (
-                <CheckIcon className="size-4" />
-              ) : (
-                <span className="w-4 h-4 inline-block" />
-              )}
-              {check === "length"
-                ? "At least 8 characters"
-                : check === "uppercase"
-                ? "At least one uppercase letter"
-                : check === "lowercase"
-                ? "At least one lowercase letter"
-                : check === "number"
-                ? "At least one number"
-                : "At least one special character"}
-            </li>
-          ))}
-        </ul>
-      </div>
-      {passwordChecks.length &&
-        passwordChecks.lowercase &&
-        passwordChecks.number &&
-        passwordChecks.special &&
-        passwordChecks.uppercase &&
-        password == confirmPassword && (
+    <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-md">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <h1 className="text-2xl font-bold">Change Password</h1>
+        <div className="relative">
+          <input
+            type={showCurrentPassword ? "text" : "password"}
+            className="w-full py-2 border px-4 text-sm outline-none pr-10 rounded-md"
+            placeholder="Current Password *"
+            value={currentPassword}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setCurrentPassword(e.target.value)
+            }
+            required
+          />
           <button
-            type="submit"
-            className="uppercase border border-black p-2 hover:bg-black hover:text-white transition-all duration-200 ease-in-out"
+            type="button"
+            onClick={toggleCurrentPasswordVisibility}
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
           >
-            Change password
+            {showCurrentPassword ? (
+              <EyeOffIcon className="size-5" />
+            ) : (
+              <EyeIcon className="size-5" />
+            )}
           </button>
-        )}
-    </form>
+        </div>
+        <div className="relative">
+          <input
+            type={showNewPassword ? "text" : "password"}
+            className="w-full py-2 border px-4 text-sm outline-none pr-10 rounded-md"
+            placeholder="New Password *"
+            value={password}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setPassword(e.target.value)
+            }
+            required
+          />
+          <button
+            type="button"
+            onClick={toggleNewPasswordVisibility}
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+          >
+            {showNewPassword ? (
+              <EyeOffIcon className="size-5" />
+            ) : (
+              <EyeIcon className="size-5" />
+            )}
+          </button>
+        </div>
+        <input
+          type="password"
+          className={`w-full py-2 border px-4 text-sm outline-none rounded-md ${getConfirmPasswordBorderColor()}`}
+          placeholder="Retype Password *"
+          value={confirmPassword}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setConfirmPassword(e.target.value)
+          }
+          required
+        />
+        <div className="text-xs text-gray-600">
+          <ul className="space-y-2">
+            {(
+              Object.entries(passwordChecks) as [
+                keyof PasswordChecks,
+                boolean
+              ][]
+            ).map(([check, isValid]) => (
+              <li key={check} className="flex items-center gap-2">
+                {isValid ? (
+                  <CheckIcon className="size-4 text-green-500" />
+                ) : (
+                  <span className="w-4 h-4 inline-block" />
+                )}
+                {check === "length"
+                  ? "At least 8 characters"
+                  : check === "uppercase"
+                  ? "At least one uppercase letter"
+                  : check === "lowercase"
+                  ? "At least one lowercase letter"
+                  : check === "number"
+                  ? "At least one number"
+                  : "At least one special character"}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <button
+          type="submit"
+          disabled={
+            !passwordChecks.length ||
+            !passwordChecks.lowercase ||
+            !passwordChecks.number ||
+            !passwordChecks.special ||
+            !passwordChecks.uppercase ||
+            password !== confirmPassword
+          }
+          className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-900 transition-colors duration-200"
+        >
+          Change Password
+        </button>
+      </form>
+    </div>
   );
 }

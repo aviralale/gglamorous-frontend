@@ -4,6 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "@/auth/auth";
 
+import { toast } from "react-toastify";
 interface PasswordChecks {
   length: boolean;
   uppercase: boolean;
@@ -21,7 +22,6 @@ export default function Register(): JSX.Element {
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [passwordsMatch, setPasswordsMatch] = useState<boolean | null>(null);
-  const [message, setMessage] = useState<string>("");
 
   const [passwordChecks, setPasswordChecks] = useState<PasswordChecks>({
     length: false,
@@ -66,7 +66,7 @@ export default function Register(): JSX.Element {
       !passwordChecks.uppercase &&
       password !== confirmPassword
     ) {
-      setMessage("Password doesn't meet the required criterias.");
+      toast.warning("Password doesn't meet the required criterias.");
       return;
     }
     const data = {
@@ -81,8 +81,10 @@ export default function Register(): JSX.Element {
       const response = await registerUser(data);
       console.log(response);
       navigate("/");
+      toast.success("Registered Successfully.");
     } catch (error) {
       console.error(error);
+      toast.error("Registered Successfully.");
     }
   };
 
@@ -96,7 +98,7 @@ export default function Register(): JSX.Element {
   };
 
   return (
-    <>
+    <div className="pt-44">
       <h1 className="text-2xl font-semibold mb-2">Create an account</h1>
       <div className="flex flex-col gap-6">
         <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
@@ -233,6 +235,6 @@ export default function Register(): JSX.Element {
           </button>
         </form>
       </div>
-    </>
+    </div>
   );
 }

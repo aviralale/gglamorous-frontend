@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -9,72 +9,65 @@ import { useCart } from "@/contexts/CartContext";
 import { HeartIcon } from "@/assets/Icons";
 import { useWishList } from "@/contexts/WishListContext";
 import { useAuth } from "@/auth/AuthContext";
+import { axiosInstance } from "@/auth/auth";
+import { Review } from "@/types/types";
+import { Product } from "@/types/types";
+import BlackStarRating from "./BlackStarRating";
+import ReviewForm from "./ReviewForm";
 
-interface Size {
-  size: string;
-  stock: number;
-  available: boolean;
-}
-
-interface Image {
-  id: number;
-  image: string;
-  alt_text: string | null;
-  image_url: string;
-}
-
-interface Category {
-  id: number;
-  name: string;
-  slug: string;
-  description: string;
-  product_count: number;
-}
-
-interface Product {
-  id: number;
-  name: string;
-  slug: string;
-  description: string;
-  price: string;
-  is_sale: boolean;
-  sale_price: string | null;
-  category: Category;
-  images: Image[];
-  available_sizes: Size[];
-  in_stock: boolean;
-  availability_status: string;
-  colors: Record<string, string>;
-  discount_percentage: number;
-  fabric_and_care?: string;
-}
+import { toast } from "react-toastify";
 
 interface ProductDetailsProps {
   product: Product;
+  productSlug: string;
   onAddToCart: (size: string, color: string) => void;
 }
 
-export const ProductDetails = ({ product }: ProductDetailsProps) => {
+export const ProductDetails = ({
+  product,
+  productSlug,
+}: ProductDetailsProps) => {
   const [selectedSize, setSelectedSize] = useState<string>("");
-  const [selectedColor, setSelectedColor] = useState<string>("");
-  const [quantity, setQuantity] = useState<string>("1");
+  const [showReviewForm, setShowReviewForm] = useState(false);
+  const [quantity, setQuantity] = useState<string>("");
+  const [reviews, setReviews] = useState<Review[]>([]);
   const { cart, addToCart } = useCart();
   const { addToWishList } = useWishList();
   const { isLoggedIn } = useAuth();
 
+  const handleReviewSubmitted = () => {
+    setShowReviewForm(false);
+    fetchReviews();
+  };
+
+  const fetchReviews = async () => {
+    try {
+      const response = await axiosInstance.get<Review[]>(
+        `reviews/product_reviews/?product_slug=${productSlug}`
+      );
+      setReviews(response?.data);
+    } catch (err: any) {
+      console.error("Error fetching reviews:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchReviews();
+  }, [productSlug]);
+
   const handleAddToCart = () => {
-    if (selectedSize && selectedColor) {
-      addToCart(cart, `${product.id}`, selectedSize, selectedColor, quantity);
-      console.log("success");
+    if (selectedSize) {
+      addToCart(cart, product.id, selectedSize, parseInt(quantity));
+      toast.success(`Added ${product.name} to cart successfully.`);
     }
   };
   const handleAddToWishList = () => {
-    if (selectedSize && selectedColor) {
+    if (selectedSize) {
       addToWishList(product.id, selectedSize);
       console.log("success");
+      toast.success(`Added ${product.name} to wishlist successfully.`);
     }
   };
-  const reversedSizes = [...product.available_sizes].reverse();
   return (
     <div className="space-y-6">
       <div>
@@ -83,10 +76,10 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
           {product.is_sale ? (
             <>
               <span className="text-lg text-muted-foreground text-red-500 line-through">
-                NPR {product.sale_price}
+                NPR {product.price}
               </span>
               <span className="text-lg text-muted-foreground">
-                NPR {product.price}
+                NPR {product.sale_price}
               </span>
             </>
           ) : (
@@ -101,7 +94,7 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
       <div>
         <h3 className="text-sm font-medium text-gray-900">Sizes</h3>
         <div className="mt-2 flex gap-2 ">
-          {reversedSizes.map((sizeInfo) => (
+          {product.available_sizes.map((sizeInfo) => (
             <button
               key={sizeInfo.size}
               onClick={() => setSelectedSize(sizeInfo.size)}
@@ -120,22 +113,6 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
         </div>
       </div>
 
-      <div>
-        <h3 className="text-sm font-medium text-gray-900">Colors</h3>
-        <div className="mt-2 flex gap-2">
-          {Object.entries(product.colors).map(([colorName, colorCode]) => (
-            <button
-              key={colorName}
-              onClick={() => setSelectedColor(colorName)}
-              className={`h-8 w-8 rounded-full border-2 ${
-                selectedColor === colorName ? "ring-2 ring-blue-500" : ""
-              }`}
-              style={{ backgroundColor: colorCode }}
-              title={colorName}
-            />
-          ))}
-        </div>
-      </div>
       <div className="flex gap-2 flex-col">
         <label htmlFor="quantity" className="text-sm font-medium text-gray-900">
           Quantity:
@@ -152,7 +129,7 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
       <div className="flex gap-2">
         <button
           onClick={handleAddToCart}
-          disabled={!isLoggedIn || !selectedSize || !selectedColor}
+          disabled={!isLoggedIn || !selectedSize || !quantity}
           className="w-full uppercase border transition-all duration-200 ease-in-out border-black px-4 py-2 text-black hover:bg-black hover:text-white disabled:text-muted-foreground disabled:bg-transparent disabled:cursor-not-allowed"
         >
           Add to Cart
@@ -166,27 +143,77 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
         </button>
       </div>
       <Accordion type="single" collapsible className="w-full">
-        <AccordionItem value="item-1">
-          <AccordionTrigger className="uppercase">
-            Fabric and care
-          </AccordionTrigger>
-          <AccordionContent>{product.fabric_and_care}</AccordionContent>
-        </AccordionItem>
         <AccordionItem value="item-2">
           <AccordionTrigger>ABOUT</AccordionTrigger>
-          <AccordionContent>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cum,
-            dolorem necessitatibus placeat ea repellat mollitia impedit?
-            Mollitia error nam aliquid eligendi consequuntur? Quam distinctio
-            aliquam autem! Officia corporis beatae odio voluptate similique
-            expedita eaque non, quia voluptatum alias!
-          </AccordionContent>
+          <AccordionContent>{product.description}</AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-3">
-          <AccordionTrigger>REVIEWS</AccordionTrigger>
-          <AccordionContent>
-            Yes. It&apos;s animated by default, but you can disable it if you
-            prefer.
+          <AccordionTrigger onClick={fetchReviews}>
+            REVIEWS
+            <BlackStarRating
+              name="quality_rating"
+              value={product.ratings.average.overall}
+              readOnly
+              size="small"
+            />
+          </AccordionTrigger>
+          <AccordionContent className="max-h-[50vh] flex flex-col overflow-y-scroll">
+            {reviews.length > 0 ? (
+              reviews.map((review) => (
+                <>
+                  <div key={review.id} className="space-y-2">
+                    <div>
+                      <p className="font-semibold">
+                        {review.user.name} said...
+                      </p>
+                      <p>{review.comment}</p>
+                    </div>
+                    <div className="flex flex-col">
+                      <div className="flex gap-2">
+                        <div className="flex text-sm">
+                          <p>Quality</p>
+                          <BlackStarRating
+                            name="quality_rating"
+                            value={review.quality_rating}
+                            readOnly
+                            size="small"
+                          />
+                        </div>
+                        <div className="flex">
+                          <p>Value</p>
+                          <BlackStarRating
+                            name="quality_rating"
+                            value={review.value_rating}
+                            readOnly
+                            size="small"
+                          />
+                        </div>
+                      </div>
+                      <div className="flex justify-between">
+                        <p>Size: {review.size}</p>
+                        <p className="text-muted-foreground text-xs">
+                          {new Date(review.created_at).toLocaleDateString()}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <hr className="my-2" />
+                </>
+              ))
+            ) : (
+              <p>No reviews available for this product.</p>
+            )}
+
+            {showReviewForm ? (
+              <ReviewForm
+                productId={product.id}
+                onReviewSubmitted={handleReviewSubmitted}
+              />
+            ) : (
+              <button onClick={() => setShowReviewForm(true)}>
+                Write a review
+              </button>
+            )}
           </AccordionContent>
         </AccordionItem>
       </Accordion>

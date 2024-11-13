@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { axiosInstance } from "@/auth/auth";
+import { toast } from "react-toastify";
 
 interface AddressFormProps {
   onSuccess: () => void;
@@ -34,11 +35,12 @@ export default function AddressForm({ onSuccess }: AddressFormProps) {
 
       console.log("Address Submitted:", address);
       await axiosInstance.post("/addresses/", address);
-
+      toast.success("Address Submitted");
       // Call onSuccess to close the dialog
       onSuccess();
     } catch (error) {
       console.error("Address Submission Error:", error);
+      toast.error("Address Submission Error");
     }
   };
 

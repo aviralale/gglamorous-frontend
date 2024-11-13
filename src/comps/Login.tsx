@@ -3,6 +3,8 @@ import { useState, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/auth/AuthContext";
 
+import { toast } from "react-toastify";
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,13 +18,16 @@ export default function Login() {
       const response = await loginUser(data);
       console.log(response);
       setIsLoggedIn(true);
+
       navigate("/profile");
+      toast.success("Logged in successfully.");
     } catch (error: any) {
       console.log(error);
+      toast.success("Failed to login. Please check your credentials");
     }
   };
   return (
-    <>
+    <div className="pt-44">
       <h1 className="text-2xl font-semibold mb-2">Login</h1>
       <div className="flex flex-col gap-6">
         <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
@@ -51,6 +56,6 @@ export default function Login() {
           </Link>
         </form>
       </div>
-    </>
+    </div>
   );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { X } from "lucide-react";
-
+import { Product } from "@/types/types";
 interface CartItem {
   id: number;
   product: number;
@@ -9,21 +9,9 @@ interface CartItem {
   stock?: number;
 }
 
-interface Product {
-  id: number;
-  name: string;
-  price: string;
-  sale_price?: string;
-  is_sale: boolean;
-  images: Array<{
-    image: string;
-    alt_text?: string;
-  }>;
-}
-
 interface CartCardProps {
   item: CartItem;
-  product: Product;
+  product: Product | null;
   removeFromCart: (itemId: number) => Promise<void>;
   onOrder: () => void;
 }
@@ -38,7 +26,7 @@ const CartCard: React.FC<CartCardProps> = ({
     <div className="mb-4">
       <div className="flex items-center justify-between gap-4">
         <div className="flex gap-4 items-center">
-          {product.images.length > 0 && (
+          {product?.images && product.images.length > 0 && (
             <div className="w-16 h-16 rounded-md overflow-hidden">
               <img
                 src={product.images[0].image}
@@ -48,23 +36,23 @@ const CartCard: React.FC<CartCardProps> = ({
             </div>
           )}
           <div className="flex flex-col">
-            <h3 className="font-semibold text-lg">{product.name}</h3>
+            <h3 className="font-semibold text-lg">{product?.name}</h3>
             <p className="text-sm text-gray-600">
               Size: {item.size} · × {item.quantity}
             </p>
             <div className="flex items-center gap-2">
               <span
                 className={`${
-                  product.is_sale
+                  product?.is_sale
                     ? "line-through text-gray-400 text-xs"
                     : "text-primary"
                 }`}
               >
-                NPR {product.price}
+                NPR {product?.price}
               </span>
-              {product.is_sale && (
+              {product?.is_sale && (
                 <span className="text-green-600 text-xs">
-                  NPR {product.sale_price}
+                  NPR {product?.sale_price}
                 </span>
               )}
             </div>
@@ -73,7 +61,7 @@ const CartCard: React.FC<CartCardProps> = ({
         <div className="flex gap-2 items-start">
           <button
             onClick={onOrder}
-            className=" px-4 py-2 rounded-md text-sm transition-colors hover:underline"
+            className="px-4 py-2 rounded-md text-sm transition-colors hover:underline"
           >
             Order
           </button>
